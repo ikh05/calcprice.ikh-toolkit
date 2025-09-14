@@ -1,11 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    tes
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  </head>
+  <body style="min-height: 100vh;">
+    <!-- NAVBAR -->
+    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+            <!-- <img src="" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"> -->
+                Calc-Price
+            </a>
+        </div>
+    </nav>
+
+    <!-- BODY -->
+    <div id="main" class="container mt-2">
+        <div class="row g-2 justify-content-center">
+        </div>
+    </div>
+
+    
+    <!-- FOOTER -->
+    <!-- <footer class="position-fixed bottom-0">
+        Muhammad Ikhsan
+    </footer> -->
+    
+    <!-- FLOATING BUTTON -->
+    <div class="floating position-fixed bottom-0 end-0 text-center me-3 mb-3">
+        <button onclick="addCard()" class="btn btn-success fs-4 ">+</button>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+        const card = `
+            <div class="col-sm-4 col-6">
+              <div class="card">
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text" class="form-control rounded"  placeholder="Nama Barang/Merek"/>
+                        <button onclick=removeCard(this) class="ms-2 btn btn-outline-danger rounded border-0">X</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-2 border rounded">
+                        <div class="form-floating">
+                            <input oninput="hitung(this)" type="number" min="0" class="form-control border-0 banyak" placeholder=" "/>
+                            <label class="form-label">Banyak/Berat</label>
+                        </div>
+                        <span class="mx-3 fs-3 d-flex justify-content-center align-items-center">/</span>
+                        <div class="form-floating">
+                            <input oninput="hitung(this)" type="number" min="0" class="form-control border-0 harga"  placeholder=" "/>
+                            <label class="form-label">Harga</label>
+                        </div>
+                    </div>
+                    <p class="text-danger mb-0">Catatan: Satuan di semua barang harus sama</p>
+                </div>
+                <div class="card-footer">
+                    <p class="text-end mb-0">Harga Satuan: <span class="harga-satuan">-</span></p>
+                </div>
+              </div>
+            </div>
+        `;
+        const alartSuccess = ``;
+        const main = document.querySelector('#main .row');
+        
+        const getValues = e => Array.from(e.querySelectorAll('input')).map(e => e.value);
+
+        const addCard = () => main.innerHTML += card;
+        const removeCard = isClick => isClick.parentElement.parentElement.parentElement.parentElement.remove();
+        const termurah = () => Array.from(main.children).map(a => getValues(a)).sort((a, b) => b[1]/b[2] - a[1]/a[2])[0];
+        const hitung = (isChange) => {
+            let isCard = isChange.parentElement.parentElement.parentElement.parentElement;
+            let value = getValues(isCard);
+            const harga = value[2] / value[1];
+            isCard.querySelector('.harga-satuan').innerHTML = (harga === Infinity) ? "-" : harga;
+        }
+
+        addCard(), addCard();
+    </script>
+  </body>
 </html>
